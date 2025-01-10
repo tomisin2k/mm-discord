@@ -1,48 +1,32 @@
-import "./App.css";
+import React, { useState, useEffect } from "react";
 import { Routes, Route, useNavigate } from "react-router-dom";
 import Checkout from "./checkout";
-import { useEffect } from 'react';
+import "./App.css";
 
 function App() {
   const navigate = useNavigate();
+  const [isMenuActive, setIsMenuActive] = useState(false);
 
   const handleJoinClick = () => {
     navigate("/checkout");
   };
 
+  const toggleMenu = () => {
+    setIsMenuActive(!isMenuActive);
+  };
+
   useEffect(() => {
-    const hamburger = document.querySelector('.hamburger');
-    const navbarLeft = document.querySelector('.navbar-left');
-    const navbar = document.querySelector('.navbar');
-    
-    hamburger?.addEventListener('click', () => {
-      hamburger.classList.toggle('active');
-      navbarLeft?.classList.toggle('active');
-      navbar?.classList.toggle('menu-active');
-    });
+    const handleClickOutside = (event: MouseEvent) => {
+      const target = event.target as Node;
+      const navbar = document.querySelector(".navbar");
+      if (navbar && !navbar.contains(target)) {
+        setIsMenuActive(false);
+      }
+    };
 
-    // Close menu when clicking outside
-    document.addEventListener('click', (e) => {
-      const target = e.target as Node;
-      if (navbar?.contains(target)) return;
-      hamburger?.classList.remove('active');
-      navbarLeft?.classList.remove('active');
-      navbar?.classList.remove('menu-active');
-    });
-
-    // Close menu when clicking on a link
-    const navLinks = document.querySelectorAll('.navbar-left a');
-    navLinks.forEach(link => {
-      link.addEventListener('click', () => {
-        hamburger?.classList.remove('active');
-        navbarLeft?.classList.remove('active');
-        navbar?.classList.remove('menu-active');
-      });
-    });
-
+    document.addEventListener("click", handleClickOutside);
     return () => {
-      hamburger?.removeEventListener('click', () => {});
-      document.removeEventListener('click', () => {});
+      document.removeEventListener("click", handleClickOutside);
     };
   }, []);
 
@@ -57,18 +41,26 @@ function App() {
               href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css"
             />
 
-            <nav className="navbar">
-              <div className="hamburger">
+            <nav className={`navbar ${isMenuActive ? "menu-active" : ""}`}>
+              <div className="hamburger" onClick={toggleMenu}>
                 <span></span>
                 <span></span>
                 <span></span>
               </div>
 
-              <div className="navbar-left">
-                <a href="#testimonials">TESTIMONIALS</a>
-                <a href="#faq">FAQ</a>
-                <a href="#">ABOUT</a>
-                <a href="#socials">SOCIALS</a>
+              <div className={`navbar-left ${isMenuActive ? "active" : ""}`}>
+                <a href="#testimonials" onClick={() => setIsMenuActive(false)}>
+                  TESTIMONIALS
+                </a>
+                <a href="#faq" onClick={() => setIsMenuActive(false)}>
+                  FAQ
+                </a>
+                <a href="#" onClick={() => setIsMenuActive(false)}>
+                  ABOUT
+                </a>
+                <a href="#socials" onClick={() => setIsMenuActive(false)}>
+                  SOCIALS
+                </a>
               </div>
 
               <button className="glow-button" onClick={handleJoinClick}>
@@ -427,7 +419,6 @@ function App() {
         }
       />
       <Route path="/checkout" element={<Checkout />} />
-      
     </Routes>
   );
 }

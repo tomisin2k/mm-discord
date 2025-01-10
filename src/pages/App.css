@@ -209,8 +209,7 @@ html {
 .navbar {
   display: flex;
   align-items: center;
-  justify-content: space-between; /* This should work */
-  width: 100%; /* Make sure navbar takes full width */
+  justify-content: space-between;
   padding: 0.8rem 2rem;
   background: rgba(10, 10, 10, 0.8);
   position: sticky;
@@ -896,19 +895,18 @@ video {
 }
 
 /* Add overlay when menu is open */
-.navbar::before {
-    content: '';
-    position: fixed;
-    top: 0;
-    left: 0;
-    width: 100%;
-    height: 100%;
-    background: rgba(0, 0, 0, 0.5);
-    backdrop-filter: blur(3px);
-    opacity: 0;
-    visibility: hidden;
-    transition: all 0.3s ease;
-    z-index: 90;
+.navbar.menu-active::before {
+  content: '';
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: rgba(0, 0, 0, 0.5);
+  backdrop-filter: blur(3px);
+  opacity: 1;
+  visibility: visible;
+  z-index: 90;
 }
 
 .navbar.menu-active::before {
