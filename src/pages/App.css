@@ -67,6 +67,7 @@ html {
   top: 0;
   z-index: 100;
   backdrop-filter: blur(12px);
+  display: none;
 }
 
 .navbar-left {
@@ -806,4 +807,24 @@ video {
 
 .mm-copy {
   animation: fadeInUp 0.8s ease-out forwards;
+}
+
+/* Tablet */
+@media (max-width: 768px) {
+  * {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    max-width: 100%;
+  }
+}
+
+/* Mobile */
+@media (max-width: 480px) {
+  * {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    max-width: 100%;
+  }
 }

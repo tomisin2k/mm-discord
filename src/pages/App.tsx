@@ -22,6 +22,12 @@ function App() {
             />
 
             <nav className="navbar">
+              {/* Hamburger Button */}
+              {/* <div className="hamburger-menu" onClick={toggleMenu}>
+                <span></span>
+                <span></span>
+                <span></span>
+              </div> */}
               <div className="navbar-left">
                 <a href="#testimonials">TESTIMONIALS</a>
                 <a href="#faq">FAQ</a>
