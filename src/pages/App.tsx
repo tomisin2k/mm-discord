@@ -5,30 +5,10 @@ import "./App.css";
 
 function App() {
   const navigate = useNavigate();
-  const [isMenuActive, setIsMenuActive] = useState(false);
 
   const handleJoinClick = () => {
     navigate("/checkout");
   };
-
-  const toggleMenu = () => {
-    setIsMenuActive(!isMenuActive);
-  };
-
-  useEffect(() => {
-    const handleClickOutside = (event: MouseEvent) => {
-      const target = event.target as Node;
-      const navbar = document.querySelector(".navbar");
-      if (navbar && !navbar.contains(target)) {
-        setIsMenuActive(false);
-      }
-    };
-
-    document.addEventListener("click", handleClickOutside);
-    return () => {
-      document.removeEventListener("click", handleClickOutside);
-    };
-  }, []);
 
   return (
     <Routes>
@@ -41,26 +21,12 @@ function App() {
               href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css"
             />
 
-            <nav className={`navbar ${isMenuActive ? "menu-active" : ""}`}>
-              <div className="hamburger" onClick={toggleMenu}>
-                <span></span>
-                <span></span>
-                <span></span>
-              </div>
-
-              <div className={`navbar-left ${isMenuActive ? "active" : ""}`}>
-                <a href="#testimonials" onClick={() => setIsMenuActive(false)}>
-                  TESTIMONIALS
-                </a>
-                <a href="#faq" onClick={() => setIsMenuActive(false)}>
-                  FAQ
-                </a>
-                <a href="#" onClick={() => setIsMenuActive(false)}>
-                  ABOUT
-                </a>
-                <a href="#socials" onClick={() => setIsMenuActive(false)}>
-                  SOCIALS
-                </a>
+            <nav className="navbar">
+              <div className="navbar-left">
+                <a href="#testimonials">TESTIMONIALS</a>
+                <a href="#faq">FAQ</a>
+                <a href="#">ABOUT</a>
+                <a href="#socials">SOCIALS</a>
               </div>
 
               <button className="glow-button" onClick={handleJoinClick}>
