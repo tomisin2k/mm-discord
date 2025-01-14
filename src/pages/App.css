@@ -990,7 +990,30 @@ video {
     padding: 1rem;
   }
 
+  .hero {
+    padding: 1.5rem 1rem; /* Reduce padding on mobile */
+  }
+
+  .hero p {
+    font-size: 1rem; /* Platform text */
+    margin-bottom: 0.5rem;
+  }
+
   .hero-h1 {
-    font-size: 30px;
+    font-size: 2rem; /* Main heading */
+    margin-bottom: 1rem;
+    line-height: 1.2;
+  }
+
+  #dynamic-text {
+    font-size: 1.25rem; /* Testimonial text */
+    padding: 0.75rem;
+    margin: 1rem 0;
+    line-height: 1.4;
+  }
+
+  .video-container {
+    width: 100%; /* Full width on mobile */
+    margin: 1.5rem 0;
   }
 }

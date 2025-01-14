@@ -3,13 +3,6 @@ import { Routes, Route, useNavigate } from "react-router-dom";
 import Checkout from "./checkout";
 import "./App.css";
 
-// function App() {
-//   const navigate = useNavigate();
-
-//   const handleJoinClick = () => {
-//     navigate("/checkout");
-//   };
-
 function App() {
   const navigate = useNavigate();
   const [isMenuOpen, setIsMenuOpen] = useState(false);
