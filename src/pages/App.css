@@ -991,12 +991,12 @@ video {
   }
 
   .hero {
-    padding: 1.5rem 1rem; /* Reduce padding on mobile */
+    padding: 1rem 1rem; /* Reduce padding on mobile */
   }
 
   .hero p {
     font-size: 1rem; /* Platform text */
-    margin-bottom: 0.5rem;
+    margin-bottom: 0;
   }
 
   .hero-h1 {
@@ -1015,5 +1015,29 @@ video {
   .video-container {
     width: 100%; /* Full width on mobile */
     margin: 1.5rem 0;
+    padding-bottom: 0;
+    margin-bottom: 0;
+  }
+
+  .stats-wrapper {
+    margin: 1.5rem auto; /* Reduced margin */
+    padding: 0 1rem;
+  }
+
+  .button-container {
+    margin: 1rem 0; /* Reduced margin */
+  }
+
+  /* MM Copy section */
+  .mm-copy {
+    padding: 2rem 1rem; /* Reduced padding */
+    margin: 2rem 1rem; /* Add horizontal margin */
+    border-radius: 12px; /* Slightly smaller radius */
+  }
+
+  .mm-copy h3 {
+    font-size: 1.125rem; /* 18px - more readable on mobile */
+    line-height: 1.6;
+    padding: 0 0.5rem;
   }
 }
