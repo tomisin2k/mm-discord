@@ -60,7 +60,7 @@ html {
 .navbar {
   display: flex;
   align-items: center;
-  justify-content: space-between;
+  justify-content: space-between; /* Space between left and right elements */
   padding: 1rem 2rem;
   background: rgba(10, 10, 10, 0.8);
   position: sticky;
@@ -68,6 +68,40 @@ html {
   z-index: 100;
   backdrop-filter: blur(12px);
 }
+
+/* Hamburger Menu Styles */
+.hamburger-menu {
+  display: none; /* Hidden by default */
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  width: 30px;
+  height: 30px;
+  cursor: pointer;
+  z-index: 1000; /* Ensure it's above other elements */
+}
+
+.hamburger-menu span {
+  width: 25px;
+  height: 2px;
+  background-color: white;
+  margin: 4px 0;
+  transition: all 0.3s ease;
+}
+
+.hamburger-menu.active span:nth-child(1) {
+  transform: rotate(45deg) translate(5px, 5px);
+}
+
+.hamburger-menu.active span:nth-child(2) {
+  opacity: 0;
+  transform: scale(0);
+}
+
+.hamburger-menu.active span:nth-child(3) {
+  transform: rotate(-45deg) translate(5px, -5px);
+}
+
 
 /* Hamburger Menu Styles
 .hamburger-menu {
@@ -91,12 +125,12 @@ html {
   display: none;
   position: fixed;
   top: 0;
-  left: -100%;
+  left: -100%; /* Off-screen by default */
   width: 250px;
   height: 100vh;
   background: rgba(10, 10, 10, 0.95);
   backdrop-filter: blur(12px);
-  transition: 0.3s;
+  transition: left 0.3s ease; /* Smooth transition */
   z-index: 99;
 }
 
@@ -105,6 +139,7 @@ html {
 }
 
 .mobile-nav .navbar-left {
+  display: flex;
   flex-direction: column;
   padding: 80px 20px;
   gap: 2rem;
@@ -123,6 +158,13 @@ html {
   font-size: 12px;
   transition: all 0.3s ease;
   position: relative;
+}
+
+.mobile-nav .navbar-left a {
+  font-size: 16px;
+  color: white;
+  text-decoration: none;
+  transition: color 0.3s ease;
 }
 
 .navbar-left a::after {
@@ -149,15 +191,15 @@ html {
   background: rgba(10, 10, 10, 0.8);
   color: white;
   border: 2px solid rgba(128, 0, 128, 0.5);
-  padding: 1.3rem 5.5rem;
-  font-size: 23px;
+  padding: 0.8rem 2rem; /* Adjusted padding for mobile */
+  font-size: 16px; /* Adjusted font size for mobile */
   font-weight: bold;
   border-radius: 8px;
   cursor: pointer;
   transition: all 0.3s ease;
   box-shadow: 0 0 20px rgba(128, 0, 128, 0.4),
     inset 0 0 10px rgba(128, 0, 128, 0.2);
-  margin-left: 2rem;
+  margin-left: 0; /* Remove extra margin */
   text-transform: uppercase;
   letter-spacing: 1px;
 }
@@ -866,7 +908,6 @@ video {
 }
 
 /* Mobile */
-/* Mobile */
 @media (max-width: 480px) {
   * {
     margin: 0;
@@ -947,5 +988,9 @@ video {
 
   .navbar {
     padding: 1rem;
+  }
+
+  .hero-h1 {
+    font-size: 30px;
   }
 }

@@ -10,40 +10,44 @@ import "./App.css";
 //     navigate("/checkout");
 //   };
 
-  function App() {
-    const navigate = useNavigate();
-    const [isMenuOpen, setIsMenuOpen] = useState(false);
-  
-    const toggleMenu = () => {
-      console.log("Menu toggled:", !isMenuOpen); // Debugging
-      setIsMenuOpen(!isMenuOpen);
+function App() {
+  const navigate = useNavigate();
+  const [isMenuOpen, setIsMenuOpen] = useState(false);
+
+  const toggleMenu = () => {
+    console.log("Menu toggled:", !isMenuOpen); // Debugging
+    setIsMenuOpen(!isMenuOpen);
+  };
+
+  const handleMenuClick = (event: React.MouseEvent<HTMLAnchorElement>) => {
+    // Close menu when a link is clicked
+    setIsMenuOpen(false);
+  };
+
+  const handleJoinClick = () => {
+    navigate("/checkout");
+  };
+
+  // Close menu when clicking outside
+  useEffect(() => {
+    const handleClickOutside = (event: MouseEvent) => {
+      const mobileNav = document.querySelector(".mobile-nav");
+      const hamburger = document.querySelector(".hamburger-menu");
+
+      if (
+        isMenuOpen &&
+        mobileNav &&
+        hamburger &&
+        !mobileNav.contains(event.target as Node) &&
+        !hamburger.contains(event.target as Node)
+      ) {
+        setIsMenuOpen(false);
+      }
     };
-  
-    const handleMenuClick = (event: React.MouseEvent<HTMLAnchorElement>) => {
-      // Close menu when a link is clicked
-      setIsMenuOpen(false);
-    };
-  
-    const handleJoinClick = () => {
-      navigate("/checkout");
-    };
-  
-    // Close menu when clicking outside
-    useEffect(() => {
-      const handleClickOutside = (event: MouseEvent) => {
-        const mobileNav = document.querySelector('.mobile-nav');
-        const hamburger = document.querySelector('.hamburger-menu');
-        
-        if (isMenuOpen && mobileNav && hamburger && 
-            !mobileNav.contains(event.target as Node) && 
-            !hamburger.contains(event.target as Node)) {
-          setIsMenuOpen(false);
-        }
-      };
-  
-      document.addEventListener('mousedown', handleClickOutside);
-      return () => document.removeEventListener('mousedown', handleClickOutside);
-    }, [isMenuOpen]);
+
+    document.addEventListener("mousedown", handleClickOutside);
+    return () => document.removeEventListener("mousedown", handleClickOutside);
+  }, [isMenuOpen]);
 
   return (
     <Routes>
@@ -57,7 +61,20 @@ import "./App.css";
             />
 
             <nav className="navbar">
-              {/* Hamburger Button */}
+              {/* Join Now Button (Moved to the left) */}
+              <button className="glow-button" onClick={handleJoinClick}>
+                Join Now
+              </button>
+
+              {/* Desktop Menu (Hidden on mobile) */}
+              <div className="desktop-nav navbar-left">
+                <a href="#testimonials">TESTIMONIALS</a>
+                <a href="#faq">FAQ</a>
+                <a href="#">ABOUT</a>
+                <a href="#socials">SOCIALS</a>
+              </div>
+
+              {/* Hamburger Button (Moved to the right) */}
               <div
                 className={`hamburger-menu ${isMenuOpen ? "active" : ""}`}
                 onClick={toggleMenu}
@@ -84,18 +101,6 @@ import "./App.css";
                   </a>
                 </div>
               </div>
-
-              {/* Desktop Menu */}
-              <div className="desktop-nav navbar-left">
-                <a href="#testimonials">TESTIMONIALS</a>
-                <a href="#faq">FAQ</a>
-                <a href="#">ABOUT</a>
-                <a href="#socials">SOCIALS</a>
-              </div>
-
-              <button className="glow-button" onClick={handleJoinClick}>
-                Join Now
-              </button>
             </nav>
 
             <div className="logo-container">
