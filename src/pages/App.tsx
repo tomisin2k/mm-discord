@@ -3,12 +3,46 @@ import { Routes, Route, useNavigate } from "react-router-dom";
 import Checkout from "./checkout";
 import "./App.css";
 
-function App() {
-  const navigate = useNavigate();
+// function App() {
+//   const navigate = useNavigate();
 
-  const handleJoinClick = () => {
-    navigate("/checkout");
-  };
+//   const handleJoinClick = () => {
+//     navigate("/checkout");
+//   };
+
+  function App() {
+    const navigate = useNavigate();
+    const [isMenuOpen, setIsMenuOpen] = useState(false);
+  
+    const toggleMenu = () => {
+      setIsMenuOpen(!isMenuOpen);
+    };
+  
+    const handleMenuClick = (event: React.MouseEvent<HTMLAnchorElement>) => {
+      // Close menu when a link is clicked
+      setIsMenuOpen(false);
+    };
+  
+    const handleJoinClick = () => {
+      navigate("/checkout");
+    };
+  
+    // Close menu when clicking outside
+    useEffect(() => {
+      const handleClickOutside = (event: MouseEvent) => {
+        const mobileNav = document.querySelector('.mobile-nav');
+        const hamburger = document.querySelector('.hamburger-menu');
+        
+        if (isMenuOpen && mobileNav && hamburger && 
+            !mobileNav.contains(event.target as Node) && 
+            !hamburger.contains(event.target as Node)) {
+          setIsMenuOpen(false);
+        }
+      };
+  
+      document.addEventListener('mousedown', handleClickOutside);
+      return () => document.removeEventListener('mousedown', handleClickOutside);
+    }, [isMenuOpen]);
 
   return (
     <Routes>
@@ -23,12 +57,35 @@ function App() {
 
             <nav className="navbar">
               {/* Hamburger Button */}
-              {/* <div className="hamburger-menu" onClick={toggleMenu}>
+              <div
+                className={`hamburger-menu ${isMenuOpen ? "active" : ""}`}
+                onClick={toggleMenu}
+              >
                 <span></span>
                 <span></span>
                 <span></span>
-              </div> */}
-              <div className="navbar-left">
+              </div>
+
+              {/* Mobile Menu */}
+              <div className={`mobile-nav ${isMenuOpen ? "active" : ""}`}>
+                <div className="navbar-left">
+                  <a href="#testimonials" onClick={handleMenuClick}>
+                    TESTIMONIALS
+                  </a>
+                  <a href="#faq" onClick={handleMenuClick}>
+                    FAQ
+                  </a>
+                  <a href="#" onClick={handleMenuClick}>
+                    ABOUT
+                  </a>
+                  <a href="#socials" onClick={handleMenuClick}>
+                    SOCIALS
+                  </a>
+                </div>
+              </div>
+
+              {/* Desktop Menu */}
+              <div className="desktop-nav navbar-left">
                 <a href="#testimonials">TESTIMONIALS</a>
                 <a href="#faq">FAQ</a>
                 <a href="#">ABOUT</a>
