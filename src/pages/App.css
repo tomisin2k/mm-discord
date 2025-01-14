@@ -854,6 +854,26 @@ video {
 
 /* Tablet */
 @media (max-width: 768px) {
+
+  * {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    max-width: 100%;
+  }
+
+  
+}
+
+/* Mobile */
+@media (max-width: 480px) {
+  * {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    max-width: 100%;
+  }
+
   .hamburger-menu {
     display: flex;
   }
@@ -877,15 +897,5 @@ video {
 
   .hamburger-menu.active span:nth-child(3) {
     transform: rotate(45deg) translate(-5px, -6px);
-  }
-}
-
-/* Mobile */
-@media (max-width: 480px) {
-  * {
-    margin: 0;
-    padding: 0;
-    box-sizing: border-box;
-    max-width: 100%;
   }
 }
