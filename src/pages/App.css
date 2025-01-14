@@ -1040,4 +1040,61 @@ video {
     line-height: 1.6;
     padding: 0 0.5rem;
   }
+
+  .features {
+    padding: 2rem 1rem;
+  }
+
+  .features-title {
+    font-size: 1.75rem;
+    margin-bottom: 2rem;
+    padding: 0 0.5rem;
+  }
+
+  .features-grid {
+    grid-template-columns: 1fr; /* Single column for mobile */
+    gap: 1.25rem;
+    padding: 0.5rem;
+  }
+
+  .feature-card {
+    padding: 1.5rem;
+    border-radius: 12px;
+    margin: 0 0.5rem;
+  }
+
+  .feature-icon {
+    width: 48px;
+    height: 48px;
+    margin-bottom: 1rem;
+  }
+
+  .feature-icon i {
+    font-size: 1.25rem;
+  }
+
+  .feature-card h3 {
+    font-size: 1.25rem;
+    margin-bottom: 0.75rem;
+  }
+
+  .feature-card p {
+    font-size: 0.938rem;
+    margin-bottom: 1rem;
+  }
+
+  .feature-metrics {
+    flex-direction: column;
+    gap: 0.5rem;
+    align-items: flex-start;
+  }
+
+  .risk-level,
+  .potential {
+    padding: 0.375rem 0.75rem;
+    font-size: 0.813rem;
+    width: 100%;
+    text-align: center;}
+
+  
 }
