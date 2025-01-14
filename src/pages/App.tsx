@@ -15,6 +15,7 @@ import "./App.css";
     const [isMenuOpen, setIsMenuOpen] = useState(false);
   
     const toggleMenu = () => {
+      console.log("Menu toggled:", !isMenuOpen); // Debugging
       setIsMenuOpen(!isMenuOpen);
     };
   
