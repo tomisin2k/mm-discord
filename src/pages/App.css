@@ -693,12 +693,12 @@ video {
 /* Footer Styling */
 .footer {
   background: rgba(10, 10, 10, 0.8);
-  padding: 2rem 1rem; /* Increased padding for better spacing */
+  padding: 1rem 1rem; /* Reduced padding top and bottom */
   margin-top: 2rem;
-  border-top: 1px solid rgba(128, 0, 128, 0.3);
   width: 100%;
   border-radius: 16px; /* Added border radius */
   overflow: hidden; /* Ensure content stays within the border radius */
+  border-top: none; /* Removed the border line */
 }
 
 .footer-content {
@@ -715,7 +715,7 @@ video {
   display: flex;
   justify-content: center;
   gap: 1.5rem; /* Adjusted gap for better spacing */
-  margin-bottom: 1.5rem; /* Added margin for separation */
+  margin-bottom: 1rem; /* Reduced margin for better spacing */
 }
 
 .social-icon {
@@ -999,7 +999,7 @@ video {
   font-size: 24px;
 }
 .footer {
-  padding: 1.5rem 1rem; /* Adjusted padding for mobile */
+  padding: 0.75rem 1rem; /* Further reduced padding for mobile */
   border-radius: 12px; /* Smaller border radius for mobile */
 }
 
