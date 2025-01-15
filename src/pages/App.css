@@ -69,8 +69,11 @@ html {
   right: 0;
   z-index: 100;
   backdrop-filter: blur(12px);
-  border-bottom: 1px solid rgba(128, 0, 128, 0.1);
+  /* border-bottom: 1px solid rgba(128, 0, 128, 0.1); */
   transition: all 0.3s ease;
+  height: 80px;
+  border-bottom: none; /* Removes the bottom border */
+  box-shadow: none; /* If there's a shadow causing the line, remove it */
 }
 
 /* Hamburger Menu Styles */
@@ -234,6 +237,7 @@ html {
   width: 100%;
   background: rgba(10, 10, 10, 0.8);
   overflow: hidden;
+  margin-top: 90px;
 }
 
 .navbar-logo {
@@ -333,7 +337,7 @@ html {
 
 /* Hero section */
 .hero {
-  padding: 2rem 0;
+  padding: 1rem 0;
   text-align: center;
 }
 
@@ -496,7 +500,7 @@ video {
 
 .testimonial_card {
   flex: 0 0 250px;
-  height: 180px;
+  height: 256px; /* Increased by 20% from original 180px */
   animation: scrollHorizontal 40s linear infinite;
 }
 
@@ -934,6 +938,27 @@ video {
     margin-left: 0;
     padding: 0.8rem 1.5rem;
   }
+
+  .testimonial_card {
+    height: 234px; /* Increased by 30% from original 180px */
+  }
+
+  /* Keep your existing testimonial card styles */
+.testimonial_card img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  border-radius: 12px;
+  border: 1px solid rgba(128, 0, 128, 0.3);
+  box-shadow: 0 0 15px rgba(128, 0, 128, 0.2);
+  transition: all 0.3s ease;
+}
+
+.testimonial_card:hover img {
+  transform: scale(1.05);
+  border-color: rgba(128, 0, 128, 0.8);
+  box-shadow: 0 0 20px rgba(128, 0, 128, 0.4);
+}
 }
 
 /* Mobile */
@@ -1147,5 +1172,11 @@ video {
 
   .testimonials-button-container {
     margin: 20px 0;
+  }
+
+  .testimonial_card {
+    flex: 0 0 250px;
+    height: 216px; /* Increased by 20% from original 180px */
+    animation: scrollHorizontal 40s linear infinite;
   }
 }
