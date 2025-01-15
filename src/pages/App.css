@@ -910,15 +910,30 @@ video {
 
 /* Tablet */
 @media (max-width: 768px) {
-
   * {
+
     margin: 0;
     padding: 0;
     box-sizing: border-box;
     max-width: 100%;
   }
 
-  
+  .navbar {
+    padding: 1rem 2rem;
+  }
+
+  .desktop-nav {
+    display: none;
+  }
+
+  .hamburger-menu {
+    display: flex;
+  }
+
+  .glow-button {
+    margin-left: 0;
+    padding: 0.8rem 1.5rem;
+  }
 }
 
 /* Mobile */
@@ -1003,6 +1018,14 @@ video {
   .navbar {
     padding: 1rem;
   }
+
+  /* Scroll behavior */
+.navbar.scrolled {
+  background: rgba(10, 10, 10, 0.98);
+  padding-top: 0.75rem;
+  padding-bottom: 0.75rem;
+  border-bottom: 1px solid rgba(128, 0, 128, 0.2);
+}
 
   .hero {
     padding: 1rem 1rem; /* Reduce padding on mobile */
