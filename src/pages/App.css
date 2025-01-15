@@ -60,13 +60,17 @@ html {
 .navbar {
   display: flex;
   align-items: center;
-  justify-content: space-between; /* Space between left and right elements */
-  padding: 1rem 2rem;
-  background: rgba(10, 10, 10, 0.8);
-  position: sticky;
+  justify-content: space-between;
+  padding: 1rem 4rem; /* Increased padding for desktop */
+  background: rgba(10, 10, 10, 0.95);
+  position: fixed; /* Changed to fixed */
   top: 0;
+  left: 0;
+  right: 0;
   z-index: 100;
   backdrop-filter: blur(12px);
+  border-bottom: 1px solid rgba(128, 0, 128, 0.1);
+  transition: all 0.3s ease;
 }
 
 /* Hamburger Menu Styles */
@@ -79,6 +83,13 @@ html {
   height: 30px;
   cursor: pointer;
   z-index: 1000; /* Ensure it's above other elements */
+}
+
+/* Desktop navigation */
+.desktop-nav {
+  display: flex;
+  align-items: center;
+  gap: 3rem; /* Increased spacing between items */
 }
 
 .hamburger-menu span {
@@ -148,6 +159,7 @@ html {
 /* Desktop and shared navigation styles */
 .navbar-left {
   display: flex;
+  align-items: center;
   gap: 2.5rem;
 }
 
@@ -155,9 +167,11 @@ html {
   text-decoration: none;
   color: #fff;
   font-weight: 500;
-  font-size: 12px;
+  font-size: 0.875rem; /* 14px */
+  letter-spacing: 1px;
   transition: all 0.3s ease;
   position: relative;
+  padding: 0.5rem 0;
 }
 
 .mobile-nav .navbar-left a {
@@ -172,10 +186,11 @@ html {
   position: absolute;
   width: 0;
   height: 2px;
-  bottom: -4px;
-  left: 0;
+  bottom: 0;
+  left: 50%;
   background: linear-gradient(90deg, #800080, #4b0082);
-  transition: width 0.3s ease;
+  transition: all 0.3s ease;
+  transform: translateX(-50%);
 }
 
 .navbar-left a:hover::after {
@@ -191,24 +206,23 @@ html {
   background: rgba(10, 10, 10, 0.8);
   color: white;
   border: 2px solid rgba(128, 0, 128, 0.5);
-  padding: 0.8rem 2rem; /* Adjusted padding for mobile */
-  font-size: 16px; /* Adjusted font size for mobile */
-  font-weight: bold;
+  padding: 0.8rem 2.5rem;
+  font-size: 0.875rem;
+  font-weight: 600;
   border-radius: 8px;
   cursor: pointer;
   transition: all 0.3s ease;
-  box-shadow: 0 0 20px rgba(128, 0, 128, 0.4),
-    inset 0 0 10px rgba(128, 0, 128, 0.2);
-  margin-left: 0; /* Remove extra margin */
+  box-shadow: 0 0 20px rgba(128, 0, 128, 0.2);
   text-transform: uppercase;
   letter-spacing: 1px;
+  margin-left: 2rem;
 }
 
 .glow-button:hover {
   transform: translateY(-2px);
-  box-shadow: 0 0 30px rgba(128, 0, 128, 0.6),
-    inset 0 0 15px rgba(128, 0, 128, 0.3);
+  box-shadow: 0 0 30px rgba(128, 0, 128, 0.4);
   border-color: rgba(128, 0, 128, 0.8);
+  background: rgba(128, 0, 128, 0.1);
 }
 
 /* Updated logo container styles with glitch effect */
@@ -1106,5 +1120,9 @@ video {
   .testimonials {
     margin-bottom: 0;
     padding-bottom: 0;
+  }
+
+  .testimonials-button-container {
+    margin: 20px 0;
   }
 }
