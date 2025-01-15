@@ -9,6 +9,12 @@ function App() {
   const [isMenuOpen, setIsMenuOpen] = useState(false);
   const [modalImage, setModalImage] = useState<string>("");
   const [isModalOpen, setIsModalOpen] = useState(false);
+  const [activeFaq, setActiveFaq] = useState<number | null>(null);
+
+  // Add FAQ toggle function
+  const toggleFaq = (index: number) => {
+    setActiveFaq(activeFaq === index ? null : index);
+  };
 
   const toggleMenu = () => {
     console.log("Menu toggled:", !isMenuOpen); // Debugging
@@ -511,8 +517,10 @@ function App() {
             <section className="faq" id="faq">
               <h2>Frequently Asked Questions</h2>
               <div className="faq-grid">
-                <div className="faq-item">
-                  <div className="faq-question">What is MemecoinMania?</div>
+                <div className={`faq-item ${activeFaq === 0 ? "active" : ""}`}>
+                  <div className="faq-question" onClick={() => toggleFaq(0)}>
+                    What is MemecoinMania?
+                  </div>
                   <div className="faq-answer">
                     MemecoinMania is a platform dedicated to helping people
                     understand and navigate the memecoin market. We provide
@@ -521,8 +529,10 @@ function App() {
                   </div>
                 </div>
 
-                <div className="faq-item">
-                  <div className="faq-question">How do I get started?</div>
+                <div className={`faq-item ${activeFaq === 1 ? "active" : ""}`}>
+                  <div className="faq-question" onClick={() => toggleFaq(1)}>
+                    How do I get started?
+                  </div>
                   <div className="faq-answer">
                     Getting started is simple - just click the "Join Now" button
                     at the top of the page. You'll get immediate access to our
@@ -530,8 +540,8 @@ function App() {
                   </div>
                 </div>
 
-                <div className="faq-item">
-                  <div className="faq-question">
+                <div className={`faq-item ${activeFaq === 2 ? "active" : ""}`}>
+                  <div className="faq-question" onClick={() => toggleFaq(2)}>
                     What support do you provide?
                   </div>
                   <div className="faq-answer">
@@ -541,8 +551,8 @@ function App() {
                   </div>
                 </div>
 
-                <div className="faq-item">
-                  <div className="faq-question">
+                <div className={`faq-item ${activeFaq === 3 ? "active" : ""}`}>
+                  <div className="faq-question" onClick={() => toggleFaq(3)}>
                     Is cryptocurrency trading risky?
                   </div>
                   <div className="faq-answer">
@@ -553,8 +563,8 @@ function App() {
                   </div>
                 </div>
 
-                <div className="faq-item">
-                  <div className="faq-question">
+                <div className={`faq-item ${activeFaq === 4 ? "active" : ""}`}>
+                  <div className="faq-question" onClick={() => toggleFaq(4)}>
                     What makes your platform different?
                   </div>
                   <div className="faq-answer">
@@ -597,6 +607,17 @@ function App() {
                   </a>
                   <a href="#" className="social-icon" aria-label="Telegram">
                     <i className="fab fa-telegram"></i>
+                  </a>
+                </div>
+                <div className="footer-text">
+                  &copy; {new Date().getFullYear()} MemecoinMania. All rights
+                  reserved. |{" "}
+                  <a href="#" target="_blank" rel="noopener noreferrer">
+                    Privacy Policy
+                  </a>{" "}
+                  |{" "}
+                  <a href="#" target="_blank" rel="noopener noreferrer">
+                    Terms of Service
                   </a>
                 </div>
               </div>

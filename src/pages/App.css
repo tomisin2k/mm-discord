@@ -209,8 +209,8 @@ html {
   background: rgba(10, 10, 10, 0.8);
   color: white;
   border: 2px solid rgba(128, 0, 128, 0.5);
-  padding: 0.8rem 2.5rem;
-  font-size: 0.875rem;
+  padding: 1rem 4rem;
+  font-size: 1.2rem;
   font-weight: 600;
   border-radius: 8px;
   cursor: pointer;
@@ -607,6 +607,8 @@ video {
   margin: 0 auto;
 }
 
+
+/* Updated FAQ styles */
 .faq-item {
   background-color: rgba(255, 255, 255, 0.05);
   border-radius: 8px;
@@ -688,39 +690,47 @@ video {
   justify-content: center;
 }
 
+/* Footer Styling */
 .footer {
   background: rgba(10, 10, 10, 0.8);
-  padding: 1rem 0;
-  margin-top: 1rem;
+  padding: 2rem 1rem; /* Increased padding for better spacing */
+  margin-top: 2rem;
   border-top: 1px solid rgba(128, 0, 128, 0.3);
   width: 100%;
+  border-radius: 16px; /* Added border radius */
+  overflow: hidden; /* Ensure content stays within the border radius */
 }
 
 .footer-content {
   max-width: 1200px;
   margin: 0 auto;
-  padding: 0 2rem;
+  padding: 0 1rem;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  text-align: center;
 }
 
 .social-icons {
   display: flex;
   justify-content: center;
-  gap: 2rem;
+  gap: 1.5rem; /* Adjusted gap for better spacing */
+  margin-bottom: 1.5rem; /* Added margin for separation */
 }
 
 .social-icon {
   color: white;
-  font-size: 2rem;
+  font-size: 1.5rem; /* Adjusted icon size */
   transition: all 0.3s ease;
-  padding: 0.5rem;
+  padding: 0.75rem; /* Increased padding for better click area */
   border-radius: 50%;
   background: rgba(128, 0, 128, 0.1);
   border: 1px solid rgba(128, 0, 128, 0.3);
   display: flex;
   align-items: center;
   justify-content: center;
-  width: 40px;
-  height: 40px;
+  width: 50px; /* Adjusted size */
+  height: 50px; /* Adjusted size */
   text-decoration: none;
 }
 
@@ -730,6 +740,22 @@ video {
   border-color: rgb(10, 108, 10);
   box-shadow: 0 0 20px rgba(10, 108, 10, 0.3);
   background: rgba(10, 108, 10, 0.1);
+}
+
+.footer-text {
+  color: #aaa;
+  font-size: 0.9rem;
+  margin-top: 1rem; /* Added margin for separation */
+}
+
+.footer-text a {
+  color: rgb(10, 108, 10);
+  text-decoration: none;
+  transition: color 0.3s ease;
+}
+
+.footer-text a:hover {
+  color: rgba(10, 108, 10, 0.8);
 }
 
 /* features in grid style */
@@ -940,7 +966,7 @@ video {
   video {
     width: 100%;
   }
-  
+
   .testimonial_card {
     height: 234px; /* Increased by 30% from original 180px */
   }
@@ -971,6 +997,24 @@ video {
   top: -30px;
   right: 0;
   font-size: 24px;
+}
+.footer {
+  padding: 1.5rem 1rem; /* Adjusted padding for mobile */
+  border-radius: 12px; /* Smaller border radius for mobile */
+}
+
+.social-icons {
+  gap: 1rem; /* Smaller gap for mobile */
+}
+
+.social-icon {
+  font-size: 1.25rem; /* Smaller icons for mobile */
+  width: 40px; /* Adjusted size for mobile */
+  height: 40px; /* Adjusted size for mobile */
+}
+
+.footer-text {
+  font-size: 0.8rem; /* Smaller text for mobile */
 }
 }
 
