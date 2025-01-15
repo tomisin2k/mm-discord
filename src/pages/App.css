@@ -1176,7 +1176,7 @@ video {
 
   .testimonial_card {
     flex: 0 0 250px;
-    height: 216px; /* Increased by 20% from original 180px */
+    height: 236px; /* Increased by 20% from original 180px */
     animation: scrollHorizontal 40s linear infinite;
   }
 }
