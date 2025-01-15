@@ -6,6 +6,8 @@ import "./App.css";
 function App() {
   const navigate = useNavigate();
   const [isMenuOpen, setIsMenuOpen] = useState(false);
+  const [modalImage, setModalImage] = useState<string>("");
+  const [isModalOpen, setIsModalOpen] = useState(false);
 
   const toggleMenu = () => {
     console.log("Menu toggled:", !isMenuOpen); // Debugging
@@ -19,6 +21,19 @@ function App() {
 
   const handleJoinClick = () => {
     navigate("/checkout");
+  };
+
+  // Modal functions
+  const openModal = (imageSrc: string) => {
+    setModalImage(imageSrc);
+    setIsModalOpen(true);
+    document.body.style.overflow = "hidden"; // Prevent scrolling when modal is open
+  };
+
+  const closeModal = () => {
+    setIsModalOpen(false);
+    setModalImage("");
+    document.body.style.overflow = "auto"; // Re-enable scrolling
   };
 
   // Close menu when clicking outside
@@ -42,6 +57,18 @@ function App() {
     return () => document.removeEventListener("mousedown", handleClickOutside);
   }, [isMenuOpen]);
 
+  // Add ESC key listener for modal
+  useEffect(() => {
+    const handleEscapeKey = (e: KeyboardEvent) => {
+      if (e.key === "Escape") {
+        closeModal();
+      }
+    };
+
+    document.addEventListener("keydown", handleEscapeKey);
+    return () => document.removeEventListener("keydown", handleEscapeKey);
+  }, []);
+
   return (
     <Routes>
       <Route
@@ -54,12 +81,10 @@ function App() {
             />
 
             <nav className="navbar">
-              {/* Join Now Button (Moved to the left) */}
               <button className="glow-button" onClick={handleJoinClick}>
                 Join Now
               </button>
 
-              {/* Desktop Menu (Hidden on mobile) */}
               <div className="desktop-nav navbar-left">
                 <a href="#testimonials">TESTIMONIALS</a>
                 <a href="#faq">FAQ</a>
@@ -67,7 +92,6 @@ function App() {
                 <a href="#socials">SOCIALS</a>
               </div>
 
-              {/* Hamburger Button (Moved to the right) */}
               <div
                 className={`hamburger-menu ${isMenuOpen ? "active" : ""}`}
                 onClick={toggleMenu}
@@ -77,7 +101,6 @@ function App() {
                 <span></span>
               </div>
 
-              {/* Mobile Menu */}
               <div className={`mobile-nav ${isMenuOpen ? "active" : ""}`}>
                 <div className="navbar-left">
                   <a href="#testimonials" onClick={handleMenuClick}>
@@ -231,103 +254,222 @@ function App() {
                   Success Story Started With One Bold Decision - Yours Is Next
                 </h2>
                 <div className="track-horizontal">
-                  <div className="testimonial_card">
+                  <div
+                    className="testimonial_card"
+                    onClick={() =>
+                      openModal(
+                        "https://i.ibb.co/3R05CCr/Whats-App-Image-2024-12-23-at-15-32-15.jpg"
+                      )
+                    }
+                  >
                     <img
                       src="https://i.ibb.co/3R05CCr/Whats-App-Image-2024-12-23-at-15-32-15.jpg"
                       alt="Strategic"
                     />
                   </div>
-                  <div className="testimonial_card">
+                  <div
+                    className="testimonial_card"
+                    onClick={() =>
+                      openModal(
+                        "https://i.ibb.co/09PTsVr/Whats-App-Image-2024-12-23-at-15-32-29.jpg"
+                      )
+                    }
+                  >
                     <img
                       src="https://i.ibb.co/09PTsVr/Whats-App-Image-2024-12-23-at-15-32-29.jpg"
                       alt="Strategic"
                     />
                   </div>
-                  <div className="testimonial_card">
+                  <div
+                    className="testimonial_card"
+                    onClick={() =>
+                      openModal(
+                        "https://i.ibb.co/ph1455k/Whats-App-Image-2024-12-26-at-03-10-44.jpg"
+                      )
+                    }
+                  >
                     <img
                       src="https://i.ibb.co/ph1455k/Whats-App-Image-2024-12-26-at-03-10-44.jpg"
                       alt="Strategic"
                     />
                   </div>
-                  <div className="testimonial_card">
+                  <div
+                    className="testimonial_card"
+                    onClick={() =>
+                      openModal(
+                        "https://i.ibb.co/28ynJWZ/Whats-App-Image-2024-11-28-at-23-41-03.jpg"
+                      )
+                    }
+                  >
                     <img
                       src="https://i.ibb.co/28ynJWZ/Whats-App-Image-2024-11-28-at-23-41-03.jpg"
                       alt="Strategic"
                     />
                   </div>
-                  <div className="testimonial_card">
+                  <div
+                    className="testimonial_card"
+                    onClick={() =>
+                      openModal(
+                        "https://i.ibb.co/Rjp1dTm/Whats-App-Image-2024-12-08-at-16-25-11.jpg"
+                      )
+                    }
+                  >
                     <img
                       src="https://i.ibb.co/Rjp1dTm/Whats-App-Image-2024-12-08-at-16-25-11.jpg"
                       alt="Strategic"
                     />
                   </div>
-                  <div className="testimonial_card">
+                  <div
+                    className="testimonial_card"
+                    onClick={() =>
+                      openModal(
+                        "https://i.ibb.co/T2whnrL/Whats-App-Image-2024-12-08-at-16-38-28-1.jpg"
+                      )
+                    }
+                  >
                     <img
                       src="https://i.ibb.co/T2whnrL/Whats-App-Image-2024-12-08-at-16-38-28-1.jpg"
                       alt="Strategic"
                     />
                   </div>
-                  <div className="testimonial_card">
+                  <div
+                    className="testimonial_card"
+                    onClick={() =>
+                      openModal(
+                        "https://i.ibb.co/PNjR7hV/Whats-App-Image-2024-12-08-at-16-38-28.jpg"
+                      )
+                    }
+                  >
                     <img
                       src="https://i.ibb.co/PNjR7hV/Whats-App-Image-2024-12-08-at-16-38-28.jpg"
                       alt="Strategic"
                     />
                   </div>
-                  <div className="testimonial_card">
+                  <div
+                    className="testimonial_card"
+                    onClick={() =>
+                      openModal(
+                        "https://i.ibb.co/G0VGtN6/Whats-App-Image-2024-12-08-at-16-38-28-2.jpg"
+                      )
+                    }
+                  >
                     <img
                       src="https://i.ibb.co/G0VGtN6/Whats-App-Image-2024-12-08-at-16-38-28-2.jpg"
                       alt="Strategic"
                     />
                   </div>
-                  <div className="testimonial_card">
+                  <div
+                    className="testimonial_card"
+                    onClick={() =>
+                      openModal(
+                        "https://i.ibb.co/G506Hmr/Whats-App-Image-2024-12-08-at-16-38-28-3.jpg"
+                      )
+                    }
+                  >
                     <img
                       src="https://i.ibb.co/G506Hmr/Whats-App-Image-2024-12-08-at-16-38-28-3.jpg"
                       alt="Strategic"
                     />
                   </div>
-                  <div className="testimonial_card">
+                  <div
+                    className="testimonial_card"
+                    onClick={() =>
+                      openModal(
+                        "https://i.ibb.co/SP5kWMQ/Whats-App-Image-2024-12-11-at-12-41-45.jpg"
+                      )
+                    }
+                  >
                     <img
                       src="https://i.ibb.co/SP5kWMQ/Whats-App-Image-2024-12-11-at-12-41-45.jpg"
                       alt="Strategic"
                     />
                   </div>
-                  <div className="testimonial_card">
+                  <div
+                    className="testimonial_card"
+                    onClick={() =>
+                      openModal(
+                        "https://i.ibb.co/Lz610bb/Whats-App-Image-2024-12-08-at-16-39-07.jpg"
+                      )
+                    }
+                  >
                     <img
                       src="https://i.ibb.co/Lz610bb/Whats-App-Image-2024-12-08-at-16-39-07.jpg"
                       alt="Strategic"
                     />
                   </div>
-                  <div className="testimonial_card">
+                  <div
+                    className="testimonial_card"
+                    onClick={() =>
+                      openModal(
+                        "https://i.ibb.co/pzJDFTf/Whats-App-Image-2024-12-15-at-02-30-47-1.jpg"
+                      )
+                    }
+                  >
                     <img
                       src="https://i.ibb.co/pzJDFTf/Whats-App-Image-2024-12-15-at-02-30-47-1.jpg"
                       alt="Strategic"
                     />
                   </div>
-                  <div className="testimonial_card">
+                  <div
+                    className="testimonial_card"
+                    onClick={() =>
+                      openModal(
+                        "https://i.ibb.co/S7wm5Fg/Whats-App-Image-2024-12-15-at-02-30-47.jpg"
+                      )
+                    }
+                  >
                     <img
                       src="https://i.ibb.co/S7wm5Fg/Whats-App-Image-2024-12-15-at-02-30-47.jpg"
                       alt="Strategic"
                     />
                   </div>
-                  <div className="testimonial_card">
+                  <div
+                    className="testimonial_card"
+                    onClick={() =>
+                      openModal(
+                        "https://i.ibb.co/pvHc0wj/Whats-App-Image-2024-12-15-at-02-30-48-1.jpg"
+                      )
+                    }
+                  >
                     <img
                       src="https://i.ibb.co/pvHc0wj/Whats-App-Image-2024-12-15-at-02-30-48-1.jpg"
                       alt="Strategic"
                     />
                   </div>
-                  <div className="testimonial_card">
+                  <div
+                    className="testimonial_card"
+                    onClick={() =>
+                      openModal(
+                        "https://i.ibb.co/XLW50r6/Whats-App-Image-2024-12-15-at-02-30-48.jpg"
+                      )
+                    }
+                  >
                     <img
                       src="https://i.ibb.co/XLW50r6/Whats-App-Image-2024-12-15-at-02-30-48.jpg"
                       alt="Strategic"
                     />
                   </div>
-                  <div className="testimonial_card">
+                  <div
+                    className="testimonial_card"
+                    onClick={() =>
+                      openModal(
+                        "https://i.ibb.co/FsPtpzK/Whats-App-Image-2024-12-17-at-20-47-30.jpg"
+                      )
+                    }
+                  >
                     <img
                       src="https://i.ibb.co/FsPtpzK/Whats-App-Image-2024-12-17-at-20-47-30.jpg"
                       alt="Strategic"
                     />
                   </div>
-                  <div className="testimonial_card">
+                  <div
+                    className="testimonial_card"
+                    onClick={() =>
+                      openModal(
+                        "https://i.ibb.co/wy2Y6hZ/Whats-App-Image-2024-12-17-at-20-47-30-1.jpg"
+                      )
+                    }
+                  >
                     <img
                       src="https://i.ibb.co/wy2Y6hZ/Whats-App-Image-2024-12-17-at-20-47-30-1.jpg"
                       alt="Strategic"
@@ -343,10 +485,19 @@ function App() {
               </div>
             </main>
 
-            <div className="modal">
-              <span className="close-modal">&times;</span>
-              <div className="modal-content">
-                <img src="" alt="Modal Image" />
+            {/* Modal */}
+            <div
+              className={`modal ${isModalOpen ? "active" : ""}`}
+              onClick={closeModal}
+            >
+              <div
+                className="modal-content"
+                onClick={(e) => e.stopPropagation()}
+              >
+                <span className="close-modal" onClick={closeModal}>
+                  &times;
+                </span>
+                {modalImage && <img src={modalImage} alt="Full size" />}
               </div>
             </div>
 
