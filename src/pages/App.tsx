@@ -141,7 +141,7 @@ function App() {
                   <video
                     src="videos/mm-vid1.MP4"
                     controls
-                    poster="C:\Users\SAM\Desktop\codes\kas academy react\react-app\src\assets\kas-testimonial.png" // Path to your thumbnail image
+                    poster="/assets/kas-testimonial.png" // Path to your thumbnail image
                     preload="metadata"
                   ></video>
                 </div>
