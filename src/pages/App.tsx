@@ -141,7 +141,7 @@ function App() {
                   <video
                     src="videos/mm-vid1.MP4"
                     controls
-                    poster="/assets/kas-testimonial.png" // Path to your thumbnail image
+                    poster="/images/kas-testimonial.png" // Path to your thumbnail image
                     preload="metadata"
                   ></video>
                 </div>
