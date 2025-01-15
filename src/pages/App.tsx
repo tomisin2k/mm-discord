@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from "react";
 import { Routes, Route, useNavigate } from "react-router-dom";
 import Checkout from "./checkout";
+import DynamicText from "./DynamicText";
 import "./App.css";
 
 function App() {
@@ -131,12 +132,18 @@ function App() {
                 <h1 className="hero-h1">
                   Life is what you <span className="hero-make">make</span> it.
                 </h1>
-                <h1 id="dynamic-text">
+                {/* <h1 id="dynamic-text">
                   "Ever Since Joining I have been upping my profits"
-                </h1>
+                </h1> */}
+                <DynamicText />
 
                 <div className="video-container">
-                  <video src="videos/mm-vid1.MP4" controls></video>
+                  <video
+                    src="videos/mm-vid1.MP4"
+                    controls
+                    poster="C:\Users\SAM\Desktop\codes\kas academy react\react-app\src\assets\kas-testimonial.png" // Path to your thumbnail image
+                    preload="metadata"
+                  ></video>
                 </div>
               </section>
 
