@@ -343,13 +343,18 @@ html {
 }
 
 .hero-h1 {
-  font-size: 3.5rem;
+  font-size: clamp(1.5rem, 6vw, 2.5rem); /* Adjusted font size */
   font-weight: 400;
   color: #ffffff;
-  margin-bottom: 1.5rem;
   line-height: 1.2;
   text-shadow: 0 0 20px rgba(128, 0, 128, 0.3);
   white-space: nowrap; /* Prevent text from wrapping */
+  text-align: center; /* Center the text horizontally */
+  width: 100%; /* Ensure the container takes full width */
+  overflow: visible; /* Allow text to overflow if necessary */
+  padding: 0 1rem; /* Add padding to prevent text from touching edges */
+  box-sizing: border-box; /* Include padding in width calculation */
+  margin: 0; /* Remove default margin */
 }
 
 .hero-make {

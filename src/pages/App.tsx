@@ -241,7 +241,7 @@ function App() {
                     <p>Get actionable calls for quick profit opportunities</p>
                     <div className="feature-metrics">
                       <span className="risk-level">Risk: High</span>
-                      <span className="potential">3-5x Potential</span>
+                      {/* <span className="potential">3-5x Potential</span> */}
                     </div>
                   </div>
 
@@ -253,7 +253,7 @@ function App() {
                     <p>Strategic calls for sustained growth potential</p>
                     <div className="feature-metrics">
                       <span className="risk-level">Risk: Medium</span>
-                      <span className="potential">10x+ Potential</span>
+                      {/* <span className="potential">10x+ Potential</span> */}
                     </div>
                   </div>
                 </div>
