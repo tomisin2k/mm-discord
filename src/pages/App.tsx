@@ -136,7 +136,7 @@ function App() {
               <section className="hero">
                 <p>MemecoinMania - Official Platform</p>
                 <h1 className="hero-h1">
-                  Life is what you <span className="hero-make">make</span> it.
+                  Life Is What You <span className="hero-make">Make</span> It.
                 </h1>
                 {/* <h1 id="dynamic-text">
                   "Ever Since Joining I have been upping my profits"
