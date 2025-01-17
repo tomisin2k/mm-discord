@@ -1,3 +1,4 @@
+
 /* Reset and base styles */
 * {
   margin: 0;
@@ -348,6 +349,7 @@ html {
   margin-bottom: 1.5rem;
   line-height: 1.2;
   text-shadow: 0 0 20px rgba(128, 0, 128, 0.3);
+  white-space: nowrap; /* Prevent text from wrapping */
 }
 
 .hero-make {
@@ -1239,5 +1241,11 @@ video {
     flex: 0 0 250px;
     height: 236px; /* Increased by 20% from original 180px */
     animation: scrollHorizontal 40s linear infinite;
+  }
+}
+
+@media (max-width: 360px) {
+  .hero-h1 {
+    font-size: 1.75rem; /* Even smaller for very small devices */
   }
 }
