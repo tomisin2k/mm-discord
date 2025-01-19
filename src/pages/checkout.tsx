@@ -1,21 +1,35 @@
-import React, { useState } from 'react';
-import { useNavigate } from 'react-router-dom';
-import { loadStripe } from '@stripe/stripe-js';
-import { Elements, CardElement, useStripe, useElements } from '@stripe/react-stripe-js';
+type Plan = {
+  name: string;
+  price: number;
+} | null;
+
+import React, { useState } from "react";
+import { useNavigate } from "react-router-dom";
+import { loadStripe } from "@stripe/stripe-js";
+import {
+  Elements,
+  CardElement,
+  useStripe,
+  useElements,
+} from "@stripe/react-stripe-js";
 
 // Load your publishable key from Stripe
-const stripePromise = loadStripe('your-publishable-key-here');
+const stripePromise = loadStripe("your-publishable-key-here");
 
-const CheckoutForm = ({ selectedPlan }) => {
+const CheckoutForm = ({ selectedPlan }: { selectedPlan: Plan }) => {
   const stripe = useStripe();
   const elements = useElements();
   const [error, setError] = useState<string | null>(null);
   const [loading, setLoading] = useState(false);
 
+  if (!selectedPlan) {
+    return <div>No plan selected. Please go back and select a plan.</div>;
+  }
+
   const handleSubmit = async (event: React.FormEvent) => {
     event.preventDefault();
 
-    if (!stripe || !elements || !selectedPlan) {
+    if (!stripe || !elements) {
       return;
     }
 
@@ -82,11 +96,16 @@ const Checkout = () => {
   const navigate = useNavigate();
 
   // State to track the selected cryptocurrency and its wallet address
-  const [selectedCrypto, setSelectedCrypto] = useState<string>('BTC');
-  const [walletAddress, setWalletAddress] = useState<string>('1A1zP1eP5QGefi2DMPTfTL5SLmv7DivfNa'); // Default Bitcoin address
+  const [selectedCrypto, setSelectedCrypto] = useState<string>("BTC");
+  const [walletAddress, setWalletAddress] = useState<string>(
+    "1A1zP1eP5QGefi2DMPTfTL5SLmv7DivfNa"
+  ); // Default Bitcoin address
 
   // State to track the selected plan and confirmation
-  const [selectedPlan, setSelectedPlan] = useState<{ name: string; price: number } | null>(null);
+  const [selectedPlan, setSelectedPlan] = useState<{
+    name: string;
+    price: number;
+  } | null>(null);
   const [isPlanConfirmed, setIsPlanConfirmed] = useState(false);
 
   // Function to handle crypto selection
@@ -496,12 +515,30 @@ const Checkout = () => {
             UNLOCK ACCESS TO...
           </h1>
           <ul className="features-list">
-            <li><span className="checkmark">✓</span> Live calls and AMAs with Experts</li>
-            <li><span className="checkmark">✓</span> 24/7 Support and on-demand guidance</li>
-            <li><span className="checkmark">✓</span> Live calls and AMAs with Experts</li>
-            <li><span className="checkmark">✓</span> 24/7 Support and on-demand guidance</li>
-            <li><span className="checkmark">✓</span> 24/7 Support and on-demand guidance</li>
-            <li><span className="checkmark">✓</span> 24/7 Support and on-demand guidance</li>
+            <li>
+              <span className="checkmark">✓</span> Live calls and AMAs with
+              Experts
+            </li>
+            <li>
+              <span className="checkmark">✓</span> 24/7 Support and on-demand
+              guidance
+            </li>
+            <li>
+              <span className="checkmark">✓</span> Live calls and AMAs with
+              Experts
+            </li>
+            <li>
+              <span className="checkmark">✓</span> 24/7 Support and on-demand
+              guidance
+            </li>
+            <li>
+              <span className="checkmark">✓</span> 24/7 Support and on-demand
+              guidance
+            </li>
+            <li>
+              <span className="checkmark">✓</span> 24/7 Support and on-demand
+              guidance
+            </li>
           </ul>
         </section>
 
@@ -514,24 +551,54 @@ const Checkout = () => {
               <p>Complete your payment securely using cryptocurrency.</p>
               <div className="crypto-options">
                 <div
-                  className={`crypto-option ${selectedCrypto === 'BTC' ? 'active' : ''}`}
-                  onClick={() => handleCryptoSelect('BTC', '1A1zP1eP5QGefi2DMPTfTL5SLmv7DivfNa')}
+                  className={`crypto-option ${
+                    selectedCrypto === "BTC" ? "active" : ""
+                  }`}
+                  onClick={() =>
+                    handleCryptoSelect(
+                      "BTC",
+                      "1A1zP1eP5QGefi2DMPTfTL5SLmv7DivfNa"
+                    )
+                  }
                 >
-                  <img src="https://cryptologos.cc/logos/bitcoin-btc-logo.png" alt="Bitcoin" />
+                  <img
+                    src="https://cryptologos.cc/logos/bitcoin-btc-logo.png"
+                    alt="Bitcoin"
+                  />
                   <span>Bitcoin (BTC)</span>
                 </div>
                 <div
-                  className={`crypto-option ${selectedCrypto === 'ETH' ? 'active' : ''}`}
-                  onClick={() => handleCryptoSelect('ETH', '0x742d35Cc6634C0532925a3b844B454e6Bf7D8D6F')}
+                  className={`crypto-option ${
+                    selectedCrypto === "ETH" ? "active" : ""
+                  }`}
+                  onClick={() =>
+                    handleCryptoSelect(
+                      "ETH",
+                      "0x742d35Cc6634C0532925a3b844B454e6Bf7D8D6F"
+                    )
+                  }
                 >
-                  <img src="https://cryptologos.cc/logos/ethereum-eth-logo.png" alt="Ethereum" />
+                  <img
+                    src="https://cryptologos.cc/logos/ethereum-eth-logo.png"
+                    alt="Ethereum"
+                  />
                   <span>Ethereum (ETH)</span>
                 </div>
                 <div
-                  className={`crypto-option ${selectedCrypto === 'SOL' ? 'active' : ''}`}
-                  onClick={() => handleCryptoSelect('SOL', 'So11111111111111111111111111111111111111112')}
+                  className={`crypto-option ${
+                    selectedCrypto === "SOL" ? "active" : ""
+                  }`}
+                  onClick={() =>
+                    handleCryptoSelect(
+                      "SOL",
+                      "So11111111111111111111111111111111111111112"
+                    )
+                  }
                 >
-                  <img src="https://cryptologos.cc/logos/solana-sol-logo.png" alt="Solana" />
+                  <img
+                    src="https://cryptologos.cc/logos/solana-sol-logo.png"
+                    alt="Solana"
+                  />
                   <span>Solana (SOL)</span>
                 </div>
               </div>
@@ -547,58 +614,112 @@ const Checkout = () => {
 
             <div className="form-section">
               <h2>PERSONAL INFORMATION</h2>
-              <input type="email" placeholder="Email address" className="input-field" />
-              <input type="text" placeholder="First Name" className="input-field" />
-              <input type="text" placeholder="Last Name" className="input-field" />
+              <input
+                type="email"
+                placeholder="Email address"
+                className="input-field"
+              />
+              <input
+                type="text"
+                placeholder="First Name"
+                className="input-field"
+              />
+              <input
+                type="text"
+                placeholder="Last Name"
+                className="input-field"
+              />
             </div>
 
             <div className="form-section">
               <h2>SELECT PLAN</h2>
               <div
-                className={`plan-option ${selectedPlan?.name === 'Bull Run Club' ? 'selected' : ''}`}
-                onClick={() => handlePlanSelect({ name: 'Bull Run Club', price: 2499 })}
+                className={`plan-option ${
+                  selectedPlan?.name === "Bull Run Club" ? "selected" : ""
+                }`}
+                onClick={() =>
+                  handlePlanSelect({ name: "Bull Run Club", price: 2499 })
+                }
               >
-                <div className="price">$24.99 <span className="period">/ monthly</span></div>
+                <div className="price">
+                  $24.99 <span className="period">/ monthly</span>
+                </div>
                 <div className="plan-name">Bull Run Club</div>
                 <ul className="plan-features">
-                  <li><span className="checkmark">✓</span> Daily live broadcasts</li>
-                  <li><span className="checkmark">✓</span> Daily live broadcasts</li>
-                  <li><span className="checkmark">✓</span> Daily live broadcasts</li>
+                  <li>
+                    <span className="checkmark">✓</span> Daily live broadcasts
+                  </li>
+                  <li>
+                    <span className="checkmark">✓</span> Daily live broadcasts
+                  </li>
+                  <li>
+                    <span className="checkmark">✓</span> Daily live broadcasts
+                  </li>
                 </ul>
               </div>
 
               <div
-                className={`plan-option ${selectedPlan?.name === 'Diamond Hands' ? 'selected' : ''}`}
-                onClick={() => handlePlanSelect({ name: 'Diamond Hands', price: 7499 })}
+                className={`plan-option ${
+                  selectedPlan?.name === "Diamond Hands" ? "selected" : ""
+                }`}
+                onClick={() =>
+                  handlePlanSelect({ name: "Diamond Hands", price: 7499 })
+                }
               >
                 <div className="most-popular">MOST POPULAR</div>
-                <div className="price">$74.99 <span className="period">/ 3 months</span></div>
+                <div className="price">
+                  $74.99 <span className="period">/ 3 months</span>
+                </div>
                 <div className="plan-name">Diamond Hands</div>
                 <ul className="plan-features">
-                  <li><span className="checkmark">✓</span> Daily live broadcasts</li>
-                  <li><span className="checkmark">✓</span> Daily live broadcasts</li>
-                  <li><span className="checkmark">✓</span> Daily live broadcasts</li>
+                  <li>
+                    <span className="checkmark">✓</span> Daily live broadcasts
+                  </li>
+                  <li>
+                    <span className="checkmark">✓</span> Daily live broadcasts
+                  </li>
+                  <li>
+                    <span className="checkmark">✓</span> Daily live broadcasts
+                  </li>
                 </ul>
               </div>
 
               <div
-                className={`plan-option ${selectedPlan?.name === 'Crypto Visionary' ? 'selected' : ''}`}
-                onClick={() => handlePlanSelect({ name: 'Crypto Visionary', price: 24999 })}
+                className={`plan-option ${
+                  selectedPlan?.name === "Crypto Visionary" ? "selected" : ""
+                }`}
+                onClick={() =>
+                  handlePlanSelect({ name: "Crypto Visionary", price: 24999 })
+                }
               >
                 <div className="save-badge">SAVE $50</div>
-                <div className="price">$249.99 <span className="period">/ 1 year</span></div>
+                <div className="price">
+                  $249.99 <span className="period">/ 1 year</span>
+                </div>
                 <div className="plan-name">Crypto Visionary</div>
                 <ul className="plan-features">
-                  <li><span className="checkmark">✓</span> Daily live broadcasts</li>
-                  <li><span className="checkmark">✓</span> Daily live broadcasts</li>
-                  <li><span className="checkmark">✓</span> Exclusive chats and lessons</li>
+                  <li>
+                    <span className="checkmark">✓</span> Daily live broadcasts
+                  </li>
+                  <li>
+                    <span className="checkmark">✓</span> Daily live broadcasts
+                  </li>
+                  <li>
+                    <span className="checkmark">✓</span> Exclusive chats and
+                    lessons
+                  </li>
                 </ul>
               </div>
 
               {selectedPlan && !isPlanConfirmed && (
                 <div className="plan-confirmation">
-                  <p>You selected: <strong>{selectedPlan.name}</strong></p>
-                  <button onClick={handleConfirmPlan} className="confirm-button">
+                  <p>
+                    You selected: <strong>{selectedPlan.name}</strong>
+                  </p>
+                  <button
+                    onClick={handleConfirmPlan}
+                    className="confirm-button"
+                  >
                     Continue to Payment
                   </button>
                 </div>
@@ -606,7 +727,7 @@ const Checkout = () => {
             </div>
 
             {/* Stripe Payment Section */}
-            {isPlanConfirmed && (
+            {isPlanConfirmed && selectedPlan && (
               <div className="form-section">
                 <h2>PAY WITH CARD</h2>
                 <Elements stripe={stripePromise}>
