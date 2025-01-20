@@ -1,17 +1,7 @@
-type Plan = {
-  name: string;
-  price: number;
-} | null;
-
 import React, { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { loadStripe } from "@stripe/stripe-js";
-import {
-  Elements,
-  CardElement,
-  useStripe,
-  useElements,
-} from "@stripe/react-stripe-js";
+import { Elements, CardElement, useStripe, useElements } from "@stripe/react-stripe-js";
 
 // Load your publishable key from Stripe
 const stripePromise = loadStripe("your-publishable-key-here");
@@ -38,21 +28,21 @@ const CheckoutForm = ({ selectedPlan }: { selectedPlan: Plan }) => {
     const cardElement = elements.getElement(CardElement);
 
     if (!cardElement) {
-      setError('Card element not found');
+      setError("Card element not found");
       setLoading(false);
       return;
     }
 
     try {
       // Step 1: Create a Payment Intent on the backend
-      const response = await fetch('http://localhost:3001/create-payment-intent', {
-        method: 'POST',
+      const response = await fetch("http://localhost:3001/create-payment-intent", {
+        method: "POST",
         headers: {
-          'Content-Type': 'application/json',
+          "Content-Type": "application/json",
         },
         body: JSON.stringify({
           amount: selectedPlan.price, // Use the selected plan's price
-          currency: 'usd',
+          currency: "usd",
         }),
       });
 
@@ -60,11 +50,15 @@ const CheckoutForm = ({ selectedPlan }: { selectedPlan: Plan }) => {
 
       // Step 2: Simulate a successful payment (mock flow)
       setTimeout(() => {
-        alert(`Payment successful! (Mock Flow)\nPlan: ${selectedPlan.name}\nAmount: $${(selectedPlan.price / 100).toFixed(2)}`);
+        alert(
+          `Payment successful! (Mock Flow)\nPlan: ${selectedPlan.name}\nAmount: $${(
+            selectedPlan.price / 100
+          ).toFixed(2)}`
+        );
         setLoading(false);
       }, 1000); // Simulate a 1-second delay
     } catch (err) {
-      setError('An unexpected error occurred');
+      setError("An unexpected error occurred");
       setLoading(false);
     }
   };
@@ -75,18 +69,18 @@ const CheckoutForm = ({ selectedPlan }: { selectedPlan: Plan }) => {
         options={{
           style: {
             base: {
-              fontSize: '16px',
-              color: '#fff',
-              '::placeholder': {
-                color: '#888',
+              fontSize: "16px",
+              color: "#fff",
+              "::placeholder": {
+                color: "#888",
               },
             },
           },
         }}
       />
-      {error && <div style={{ color: 'red', marginTop: '10px' }}>{error}</div>}
-      <button type="submit" disabled={!stripe || loading} style={{ marginTop: '20px' }}>
-        {loading ? 'Processing...' : `Pay $${(selectedPlan.price / 100).toFixed(2)}`}
+      {error && <div style={{ color: "red", marginTop: "10px" }}>{error}</div>}
+      <button type="submit" disabled={!stripe || loading} style={{ marginTop: "20px" }}>
+        {loading ? "Processing..." : `Pay $${(selectedPlan.price / 100).toFixed(2)}`}
       </button>
     </form>
   );
@@ -97,16 +91,17 @@ const Checkout = () => {
 
   // State to track the selected cryptocurrency and its wallet address
   const [selectedCrypto, setSelectedCrypto] = useState<string>("BTC");
-  const [walletAddress, setWalletAddress] = useState<string>(
-    "1A1zP1eP5QGefi2DMPTfTL5SLmv7DivfNa"
-  ); // Default Bitcoin address
+  const [walletAddress, setWalletAddress] = useState<string>("1A1zP1eP5QGefi2DMPTfTL5SLmv7DivfNa"); // Default Bitcoin address
 
   // State to track the selected plan and confirmation
-  const [selectedPlan, setSelectedPlan] = useState<{
-    name: string;
-    price: number;
-  } | null>(null);
+  const [selectedPlan, setSelectedPlan] = useState<Plan | null>(null);
   const [isPlanConfirmed, setIsPlanConfirmed] = useState(false);
+
+  // State to track if the entry fee has been paid
+  const [hasPaidEntryFee, setHasPaidEntryFee] = useState(false);
+
+  // State to track if the user wants to start subscription immediately or later
+  const [startSubscriptionNow, setStartSubscriptionNow] = useState<boolean | null>(null);
 
   // Function to handle crypto selection
   const handleCryptoSelect = (crypto: string, address: string) => {
@@ -115,7 +110,7 @@ const Checkout = () => {
   };
 
   // Function to handle plan selection
-  const handlePlanSelect = (plan: { name: string; price: number }) => {
+  const handlePlanSelect = (plan: Plan) => {
     setSelectedPlan(plan);
     setIsPlanConfirmed(false); // Reset confirmation when a new plan is selected
   };
@@ -326,7 +321,8 @@ const Checkout = () => {
       background: rgba(128, 0, 128, 0.8);
       color: #fff;
       border: none;
-      padding: 10px 20px;
+      padding: 14px 20px;
+      margin-top: 17px;
       border-radius: 8px;
       cursor: pointer;
       font-size: 1em;
@@ -414,6 +410,56 @@ const Checkout = () => {
     .crypto-address span {
       color: rgb(10, 108, 10);
       font-weight: bold;
+    }
+
+    /* Subscription Options Section */
+    .subscription-options {
+      margin-top: 20px;
+      text-align: center;
+    }
+
+    .subscription-options h2 {
+      font-size: 1.5em;
+      margin-bottom: 20px;
+      color: #fff;
+    }
+
+    .subscription-options p {
+      color: #aaa;
+      margin-bottom: 20px;
+    }
+
+    .subscription-option {
+      background: rgba(10, 10, 10, 0.8);
+      padding: 20px;
+      border-radius: 16px;
+      margin-bottom: 15px;
+      cursor: pointer;
+      position: relative;
+      border: 1px solid rgba(128, 0, 128, 0.3);
+      transition: all 0.3s ease;
+    }
+
+    .subscription-option.selected {
+      border-color: rgba(128, 0, 128, 0.8);
+      box-shadow: 0 0 20px rgba(128, 0, 128, 0.2);
+    }
+
+    .subscription-option:hover {
+      border-color: rgba(128, 0, 128, 0.8);
+      box-shadow: 0 0 20px rgba(128, 0, 128, 0.2);
+      transform: translateY(-5px);
+    }
+
+    .subscription-option h3 {
+      font-size: 1.5em;
+      margin-bottom: 10px;
+      color: #fff;
+    }
+
+    .subscription-option p {
+      color: #aaa;
+      margin-bottom: 10px;
     }
 
     /* Show left section only on desktop */
@@ -516,28 +562,13 @@ const Checkout = () => {
           </h1>
           <ul className="features-list">
             <li>
-              <span className="checkmark">✓</span> Live calls and AMAs with
-              Experts
+              <span className="checkmark">✓</span> Live calls and AMAs with Experts
             </li>
             <li>
-              <span className="checkmark">✓</span> 24/7 Support and on-demand
-              guidance
+              <span className="checkmark">✓</span> 24/7 Support and on-demand guidance
             </li>
             <li>
-              <span className="checkmark">✓</span> Live calls and AMAs with
-              Experts
-            </li>
-            <li>
-              <span className="checkmark">✓</span> 24/7 Support and on-demand
-              guidance
-            </li>
-            <li>
-              <span className="checkmark">✓</span> 24/7 Support and on-demand
-              guidance
-            </li>
-            <li>
-              <span className="checkmark">✓</span> 24/7 Support and on-demand
-              guidance
+              <span className="checkmark">✓</span> Exclusive memecoin insights
             </li>
           </ul>
         </section>
@@ -545,194 +576,217 @@ const Checkout = () => {
         {/* Right Section */}
         <section className="right-section">
           <div className="signup-container">
-            {/* Crypto Payment Section - Moved to the top */}
-            <div className="crypto-payment">
-              <h2>PAY ENTRY FEE WITH CRYPTO</h2>
-              <p>Complete your payment securely using cryptocurrency.</p>
-              <div className="crypto-options">
-                <div
-                  className={`crypto-option ${
-                    selectedCrypto === "BTC" ? "active" : ""
-                  }`}
-                  onClick={() =>
-                    handleCryptoSelect(
-                      "BTC",
-                      "1A1zP1eP5QGefi2DMPTfTL5SLmv7DivfNa"
-                    )
-                  }
-                >
-                  <img
-                    src="https://cryptologos.cc/logos/bitcoin-btc-logo.png"
-                    alt="Bitcoin"
-                  />
-                  <span>Bitcoin (BTC)</span>
-                </div>
-                <div
-                  className={`crypto-option ${
-                    selectedCrypto === "ETH" ? "active" : ""
-                  }`}
-                  onClick={() =>
-                    handleCryptoSelect(
-                      "ETH",
-                      "0x742d35Cc6634C0532925a3b844B454e6Bf7D8D6F"
-                    )
-                  }
-                >
-                  <img
-                    src="https://cryptologos.cc/logos/ethereum-eth-logo.png"
-                    alt="Ethereum"
-                  />
-                  <span>Ethereum (ETH)</span>
-                </div>
-                <div
-                  className={`crypto-option ${
-                    selectedCrypto === "SOL" ? "active" : ""
-                  }`}
-                  onClick={() =>
-                    handleCryptoSelect(
-                      "SOL",
-                      "So11111111111111111111111111111111111111112"
-                    )
-                  }
-                >
-                  <img
-                    src="https://cryptologos.cc/logos/solana-sol-logo.png"
-                    alt="Solana"
-                  />
-                  <span>Solana (SOL)</span>
-                </div>
-              </div>
-              <div className="crypto-address">
-                Send payment to: <span>{walletAddress}</span>
-              </div>
-            </div>
-
-            <div className="signup-header">
-              <h1>JOIN MEMECOINMANIA</h1>
-              <p>THE WORLD IS YOURS</p>
-            </div>
-
-            <div className="form-section">
-              <h2>PERSONAL INFORMATION</h2>
-              <input
-                type="email"
-                placeholder="Email address"
-                className="input-field"
-              />
-              <input
-                type="text"
-                placeholder="First Name"
-                className="input-field"
-              />
-              <input
-                type="text"
-                placeholder="Last Name"
-                className="input-field"
-              />
-            </div>
-
-            <div className="form-section">
-              <h2>SELECT PLAN</h2>
-              <div
-                className={`plan-option ${
-                  selectedPlan?.name === "Bull Run Club" ? "selected" : ""
-                }`}
-                onClick={() =>
-                  handlePlanSelect({ name: "Bull Run Club", price: 2499 })
-                }
-              >
-                <div className="price">
-                  $24.99 <span className="period">/ monthly</span>
-                </div>
-                <div className="plan-name">Bull Run Club</div>
-                <ul className="plan-features">
-                  <li>
-                    <span className="checkmark">✓</span> Daily live broadcasts
-                  </li>
-                  <li>
-                    <span className="checkmark">✓</span> Daily live broadcasts
-                  </li>
-                  <li>
-                    <span className="checkmark">✓</span> Daily live broadcasts
-                  </li>
-                </ul>
-              </div>
-
-              <div
-                className={`plan-option ${
-                  selectedPlan?.name === "Diamond Hands" ? "selected" : ""
-                }`}
-                onClick={() =>
-                  handlePlanSelect({ name: "Diamond Hands", price: 7499 })
-                }
-              >
-                <div className="most-popular">MOST POPULAR</div>
-                <div className="price">
-                  $74.99 <span className="period">/ 3 months</span>
-                </div>
-                <div className="plan-name">Diamond Hands</div>
-                <ul className="plan-features">
-                  <li>
-                    <span className="checkmark">✓</span> Daily live broadcasts
-                  </li>
-                  <li>
-                    <span className="checkmark">✓</span> Daily live broadcasts
-                  </li>
-                  <li>
-                    <span className="checkmark">✓</span> Daily live broadcasts
-                  </li>
-                </ul>
-              </div>
-
-              <div
-                className={`plan-option ${
-                  selectedPlan?.name === "Crypto Visionary" ? "selected" : ""
-                }`}
-                onClick={() =>
-                  handlePlanSelect({ name: "Crypto Visionary", price: 24999 })
-                }
-              >
-                <div className="save-badge">SAVE $50</div>
-                <div className="price">
-                  $249.99 <span className="period">/ 1 year</span>
-                </div>
-                <div className="plan-name">Crypto Visionary</div>
-                <ul className="plan-features">
-                  <li>
-                    <span className="checkmark">✓</span> Daily live broadcasts
-                  </li>
-                  <li>
-                    <span className="checkmark">✓</span> Daily live broadcasts
-                  </li>
-                  <li>
-                    <span className="checkmark">✓</span> Exclusive chats and
-                    lessons
-                  </li>
-                </ul>
-              </div>
-
-              {selectedPlan && !isPlanConfirmed && (
-                <div className="plan-confirmation">
-                  <p>
-                    You selected: <strong>{selectedPlan.name}</strong>
-                  </p>
-                  <button
-                    onClick={handleConfirmPlan}
-                    className="confirm-button"
+            {/* Step 1: Pay Entry Fee with Crypto */}
+            {!hasPaidEntryFee && (
+              <div className="crypto-payment">
+                <h2>PAY ENTRY FEE WITH CRYPTO</h2>
+                <p>Complete your payment securely using cryptocurrency.</p>
+                <div className="crypto-options">
+                  <div
+                    className={`crypto-option ${
+                      selectedCrypto === "BTC" ? "active" : ""
+                    }`}
+                    onClick={() =>
+                      handleCryptoSelect(
+                        "BTC",
+                        "1A1zP1eP5QGefi2DMPTfTL5SLmv7DivfNa"
+                      )
+                    }
                   >
-                    Continue to Payment
-                  </button>
+                    <img
+                      src="https://cryptologos.cc/logos/bitcoin-btc-logo.png"
+                      alt="Bitcoin"
+                    />
+                    <span>Bitcoin (BTC)</span>
+                  </div>
+                  <div
+                    className={`crypto-option ${
+                      selectedCrypto === "ETH" ? "active" : ""
+                    }`}
+                    onClick={() =>
+                      handleCryptoSelect(
+                        "ETH",
+                        "0x742d35Cc6634C0532925a3b844B454e6Bf7D8D6F"
+                      )
+                    }
+                  >
+                    <img
+                      src="https://cryptologos.cc/logos/ethereum-eth-logo.png"
+                      alt="Ethereum"
+                    />
+                    <span>Ethereum (ETH)</span>
+                  </div>
+                  <div
+                    className={`crypto-option ${
+                      selectedCrypto === "SOL" ? "active" : ""
+                    }`}
+                    onClick={() =>
+                      handleCryptoSelect(
+                        "SOL",
+                        "So11111111111111111111111111111111111111112"
+                      )
+                    }
+                  >
+                    <img
+                      src="https://cryptologos.cc/logos/solana-sol-logo.png"
+                      alt="Solana"
+                    />
+                    <span>Solana (SOL)</span>
+                  </div>
                 </div>
-              )}
-            </div>
+                <div className="crypto-address">
+                  Send payment to: <span>{walletAddress}</span>
+                </div>
+                <button
+                  className="confirm-button"
+                  onClick={() => setHasPaidEntryFee(true)} // Simulate payment confirmation
+                >
+                  I've Paid the Entry Fee
+                </button>
+              </div>
+            )}
 
-            {/* Stripe Payment Section */}
-            {isPlanConfirmed && selectedPlan && (
-              <div className="form-section">
-                <h2>PAY WITH CARD</h2>
-                <Elements stripe={stripePromise}>
-                  <CheckoutForm selectedPlan={selectedPlan} />
-                </Elements>
+            {/* Step 2: Subscription Options */}
+            {hasPaidEntryFee && startSubscriptionNow === null && (
+              <div className="subscription-options">
+                <h2>WHAT'S NEXT?</h2>
+                <p>You've paid the entry fee and now have access to the Discord academy!</p>
+                <div
+                  className="subscription-option"
+                  onClick={() => setStartSubscriptionNow(true)}
+                >
+                  <h3>Start Subscription Now</h3>
+                  <p>Pay for a subscription plan immediately to continue access after the first month.</p>
+                </div>
+                <div
+                  className="subscription-option"
+                  onClick={() => setStartSubscriptionNow(false)}
+                >
+                  <h3>Start Subscription Later</h3>
+                  <p>Gain access now and pay for a subscription after a month.</p>
+                </div>
+              </div>
+            )}
+
+            {/* Step 3: Select Subscription Plan */}
+            {hasPaidEntryFee && startSubscriptionNow === true && (
+              <>
+                <div className="signup-header">
+                  <h1>JOIN MEMECOINMANIA</h1>
+                  <p>THE WORLD IS YOURS</p>
+                </div>
+
+                <div className="form-section">
+                  <h2>SELECT PLAN</h2>
+                  <div
+                    className={`plan-option ${
+                      selectedPlan?.name === "Bull Run Club" ? "selected" : ""
+                    }`}
+                    onClick={() =>
+                      handlePlanSelect({ name: "Bull Run Club", price: 2499 })
+                    }
+                  >
+                    <div className="price">
+                      $24.99 <span className="period">/ monthly</span>
+                    </div>
+                    <div className="plan-name">Bull Run Club</div>
+                    <ul className="plan-features">
+                      <li>
+                        <span className="checkmark">✓</span> Daily live broadcasts
+                      </li>
+                      <li>
+                        <span className="checkmark">✓</span> Exclusive insights
+                      </li>
+                    </ul>
+                  </div>
+
+                  <div
+                    className={`plan-option ${
+                      selectedPlan?.name === "Diamond Hands" ? "selected" : ""
+                    }`}
+                    onClick={() =>
+                      handlePlanSelect({ name: "Diamond Hands", price: 7499 })
+                    }
+                  >
+                    <div className="most-popular">MOST POPULAR</div>
+                    <div className="price">
+                      $74.99 <span className="period">/ 3 months</span>
+                    </div>
+                    <div className="plan-name">Diamond Hands</div>
+                    <ul className="plan-features">
+                      <li>
+                        <span className="checkmark">✓</span> Daily live broadcasts
+                      </li>
+                      <li>
+                        <span className="checkmark">✓</span> Exclusive insights
+                      </li>
+                    </ul>
+                  </div>
+
+                  <div
+                    className={`plan-option ${
+                      selectedPlan?.name === "Crypto Visionary" ? "selected" : ""
+                    }`}
+                    onClick={() =>
+                      handlePlanSelect({ name: "Crypto Visionary", price: 24999 })
+                    }
+                  >
+                    <div className="save-badge">SAVE $50</div>
+                    <div className="price">
+                      $249.99 <span className="period">/ 1 year</span>
+                    </div>
+                    <div className="plan-name">Crypto Visionary</div>
+                    <ul className="plan-features">
+                      <li>
+                        <span className="checkmark">✓</span> Daily live broadcasts
+                      </li>
+                      <li>
+                        <span className="checkmark">✓</span> Exclusive insights
+                      </li>
+                      <li>
+                        <span className="checkmark">✓</span> Priority support
+                      </li>
+                    </ul>
+                  </div>
+
+                  {selectedPlan && !isPlanConfirmed && (
+                    <div className="plan-confirmation">
+                      <p>
+                        You selected: <strong>{selectedPlan.name}</strong>
+                      </p>
+                      <button
+                        onClick={handleConfirmPlan}
+                        className="confirm-button"
+                      >
+                        Continue to Payment
+                      </button>
+                    </div>
+                  )}
+                </div>
+
+                {/* Stripe Payment Section */}
+                {isPlanConfirmed && selectedPlan && (
+                  <div className="form-section">
+                    <h2>PAY WITH CARD</h2>
+                    <Elements stripe={stripePromise}>
+                      <CheckoutForm selectedPlan={selectedPlan} />
+                    </Elements>
+                  </div>
+                )}
+              </>
+            )}
+
+            {/* Step 4: Start Subscription Later */}
+            {hasPaidEntryFee && startSubscriptionNow === false && (
+              <div className="subscription-options">
+                <h2>YOU'RE IN!</h2>
+                <p>You now have access to the Discord academy. You can start your subscription after a month.</p>
+                <button
+                  className="confirm-button"
+                  onClick={() => navigate("/")} // Redirect to home or dashboard
+                >
+                  Go to Discord Academy
+                </button>
               </div>
             )}
           </div>
