@@ -1,8 +1,8 @@
-require('dotenv').config();
-const express = require('express');
-const bodyParser = require('body-parser');
-const cors = require('cors');
-const Stripe = require('stripe');
+require("dotenv").config();
+const express = require("express");
+const bodyParser = require("body-parser");
+const cors = require("cors");
+const Stripe = require("stripe");
 
 const app = express();
 
@@ -11,23 +11,28 @@ const stripe = Stripe(process.env.STRIPE_SECRET_KEY);
 
 // Middleware
 app.use(bodyParser.json());
-app.use(cors({
-  origin: 'http://localhost:5173', // Allow requests from your frontend
-  methods: ['POST', 'GET'],
-  credentials: true,
-}));
+app.use(
+  cors({
+    origin: "http://localhost:5173", // Allow requests from your frontend
+    methods: ["POST", "GET"],
+    credentials: true,
+  })
+);
 
 // Create a Payment Intent
-app.post('/create-payment-intent', async (req, res) => {
+app.post("/create-payment-intent", async (req, res) => {
   const { amount, currency } = req.body;
 
-  console.log("Received request to create Payment Intent:", { amount, currency });
+  console.log("Received request to create Payment Intent:", {
+    amount,
+    currency,
+  });
 
   try {
     // Create a PaymentIntent using the Stripe API (test mode)
     const paymentIntent = await stripe.paymentIntents.create({
       amount: amount, // Amount in cents (e.g., $24.99 = 2499)
-      currency: currency || 'usd', // Default to USD if not provided
+      currency: currency || "usd", // Default to USD if not provided
     });
 
     console.log("Payment Intent created:", paymentIntent);
@@ -37,7 +42,7 @@ app.post('/create-payment-intent', async (req, res) => {
       clientSecret: paymentIntent.client_secret,
     });
   } catch (error) {
-    console.error('Error creating Payment Intent:', error);
+    console.error("Error creating Payment Intent:", error);
     res.status(400).send({
       error: error.message,
     });
