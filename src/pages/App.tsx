@@ -1,7 +1,9 @@
 import React, { useState, useEffect } from "react";
 import { Routes, Route, useNavigate } from "react-router-dom";
 import Checkout from "./checkout";
-import DynamicText from "./DynamicText";
+import Login from "./admin/login"; // Import the Login component
+import Dashboard from "./admin/dashboard"; // Import the Admin component
+import DynamicText from "./DynamicText"; // Import the DynamicText component
 import "./App.css";
 
 function App() {
@@ -138,9 +140,6 @@ function App() {
                 <h1 className="hero-h1">
                   Life Is What You <span className="hero-make">Make</span> It.
                 </h1>
-                {/* <h1 id="dynamic-text">
-                  "Ever Since Joining I have been upping my profits"
-                </h1> */}
                 <DynamicText />
 
                 <div className="video-container">
@@ -241,7 +240,6 @@ function App() {
                     <p>Get actionable calls for quick profit opportunities</p>
                     <div className="feature-metrics">
                       <span className="risk-level">Risk: High</span>
-                      {/* <span className="potential">3-5x Potential</span> */}
                     </div>
                   </div>
 
@@ -253,7 +251,6 @@ function App() {
                     <p>Strategic calls for sustained growth potential</p>
                     <div className="feature-metrics">
                       <span className="risk-level">Risk: Medium</span>
-                      {/* <span className="potential">10x+ Potential</span> */}
                     </div>
                   </div>
                 </div>
@@ -626,6 +623,8 @@ function App() {
         }
       />
       <Route path="/checkout" element={<Checkout />} />
+      <Route path="/admin/login" element={<Login />} /> {/* Admin login route */}
+      <Route path="/admin/dashboard" element={<Dashboard />} /> Admin dashboard route
     </Routes>
   );
 }
