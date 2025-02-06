@@ -15,8 +15,6 @@ dist-ssr
 *.local
 
 # Editor directories and files
-.vscode/*
-!.vscode/extensions.json
 .idea
 .DS_Store
 *.suo
@@ -32,7 +30,6 @@ Thumbs.db
 node_modules/
 
 # Environment variables
-.env
 
 # Testing output
 coverage/
@@ -41,3 +38,8 @@ coverage/
 package-lock.json
 yarn.lock
 pnpm-lock.yaml
+branch_structure.json
+temp_auto_push.bat
+temp_interactive_push.bat
+.gitignore
+config.bat
