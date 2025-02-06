@@ -1,11 +1,21 @@
 import React, { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { loadStripe } from "@stripe/stripe-js";
-import { Elements, CardElement, useStripe, useElements } from "@stripe/react-stripe-js";
+import {
+  Elements,
+  CardElement,
+  useStripe,
+  useElements,
+} from "@stripe/react-stripe-js";
 
 // Load your publishable key from Stripe
 const stripePromise = loadStripe(import.meta.env.VITE_STRIPE_PUBLISHABLE_KEY);
-console.log(import.meta.env.VITE_STRIPE_PUBLISHABLE_KEY)
+console.log(import.meta.env.VITE_STRIPE_PUBLISHABLE_KEY);
+
+interface Plan {
+  name: string;
+  price: number; // Price in cents
+}
 
 const CheckoutForm = ({ selectedPlan }: { selectedPlan: Plan }) => {
   const stripe = useStripe();
@@ -13,74 +23,62 @@ const CheckoutForm = ({ selectedPlan }: { selectedPlan: Plan }) => {
   const [error, setError] = useState<string | null>(null);
   const [loading, setLoading] = useState(false);
 
-  const handleSubmit = async (event: React.FormEvent) => {
-    event.preventDefault();
+  const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
+    e.preventDefault();
+    setError(null);
+    setLoading(true);
 
     if (!stripe || !elements) {
+      setError("Stripe is not loaded.");
+      setLoading(false);
       return;
     }
 
-    setLoading(true);
-
     const cardElement = elements.getElement(CardElement);
-
     if (!cardElement) {
-      setError("Card element not found");
+      setError("Card element not found.");
       setLoading(false);
       return;
     }
 
     try {
-      console.log("hello world")
-      // Step 1: Create a Payment Intent on the backend
-      const response = await fetch("http://localhost:3001/create-payment-intent", {
-        method: "POST",
-        headers: {
-          "Content-Type": "application/json",
-        },
-        body: JSON.stringify({
-          amount: selectedPlan.price, // Use the selected plan's price
-          currency: "usd",
-        }),
-      });
-
-      console.log("Response from /create-payment-intent:", response);
-
-      if (!response.ok) {
-        throw new Error(`HTTP error! Status: ${response.status}`);
-      }
+      // Fetch the PaymentIntent client secret from your server
+      const response = await fetch(
+        "http://localhost:3001/create-payment-intent",
+        {
+          method: "POST",
+          headers: { "Content-Type": "application/json" },
+          body: JSON.stringify({ amount: selectedPlan.price }),
+        }
+      );
 
       const { clientSecret } = await response.json();
-      console.log("Client Secret:", clientSecret);
 
-      // Step 2: Confirm the payment with Stripe
-      const { error: stripeError, paymentIntent } = await stripe.confirmCardPayment(clientSecret, {
+      if (!clientSecret) {
+        throw new Error("Failed to create PaymentIntent.");
+      }
+
+      // Confirm the card payment
+      const result = await stripe.confirmCardPayment(clientSecret, {
         payment_method: {
           card: cardElement,
         },
       });
 
-      if (stripeError) {
-        setError(stripeError.message || "Payment failed");
-        setLoading(false);
-        return;
+      if (result.error) {
+        setError(result.error.message || "Payment failed.");
+      } else if (result.paymentIntent?.status === "succeeded") {
+        alert("Payment successful!");
       }
-
-      if (paymentIntent.status === "succeeded") {
-        alert(`Payment successful! Plan: ${selectedPlan.name}, Amount: $${(selectedPlan.price / 100).toFixed(2)}`);
-        setLoading(false);
-        // Redirect or show success message
-      }
-    } catch (err) {
-      console.error("Error during payment:", err);
-      setError("An unexpected error occurred");
+    } catch (err: any) {
+      setError(err.message || "An unexpected error occurred.");
+    } finally {
       setLoading(false);
     }
   };
 
   return (
-    <form>
-    {/* onSubmit={handleSubmit} */}
+    <form onSubmit={handleSubmit}>
       <CardElement
         options={{
           style: {
@@ -95,8 +93,14 @@ const CheckoutForm = ({ selectedPlan }: { selectedPlan: Plan }) => {
         }}
       />
       {error && <div style={{ color: "red", marginTop: "10px" }}>{error}</div>}
-      <button type="submit" disabled={!stripe || loading} style={{ marginTop: "20px" }}>
-        {loading ? "Processing..." : `Pay $${(selectedPlan.price / 100).toFixed(2)}`}
+      <button
+        type="submit"
+        disabled={!stripe || loading}
+        style={{ marginTop: "20px" }}
+      >
+        {loading
+          ? "Processing..."
+          : `Pay $${(selectedPlan.price / 100).toFixed(2)}`}
       </button>
     </form>
   );
@@ -394,10 +398,12 @@ const Checkout = () => {
           </h1>
           <ul className="features-list">
             <li>
-              <span className="checkmark">✓</span> Live calls and AMAs with Experts
+              <span className="checkmark">✓</span> Live calls and AMAs with
+              Experts
             </li>
             <li>
-              <span className="checkmark">✓</span> 24/7 Support and on-demand guidance
+              <span className="checkmark">✓</span> 24/7 Support and on-demand
+              guidance
             </li>
             <li>
               <span className="checkmark">✓</span> Exclusive memecoin insights
